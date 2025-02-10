@@ -1,0 +1,68 @@
+<?php
+session_start();
+include 'db_connection.php'; // Conectarea la baza de date
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Verificare date utilizator
+    $query = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        
+        // Verificăm parola criptată
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_role'] = $user['role']; // Tip utilizator: 'organizer' sau 'participant'
+
+            // Redirecționare pe baza rolului
+            if ($user['role'] === 'organizer') {
+                header("Location: organizer_dashboard.php");
+            } elseif ($user['role'] === 'participant') {
+                header("Location: participant_dashboard.php");
+            }
+            exit;
+        } else {
+            $error = "Email sau parolă incorecte.";
+        }
+    } else {
+        $error = "Email sau parolă incorecte.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autentificare</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Autentificare</h2>
+        <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Parolă</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit">Loghează-te</button>
+        </form>
+        <div class="signup-link">
+            <p>Nu ai cont? <a href="signup.php">Creează cont</a></p>
+        </div>
+    </div>
+</body>
+</html>
