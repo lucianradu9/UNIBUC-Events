@@ -13,13 +13,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $role = $_POST['role']; // 'organizer' sau 'participant'
+    $recaptcha_response = $_POST['g-recaptcha-response'];
 
-    // Validare email
+    // 1. Verificare reCAPTCHA
+    $secret_key = "6LdPodIqAAAAAOfKxnW9T0BkxRX5VDdMtaX0sa_D";
+    $verify_url = "https://www.google.com/recaptcha/api/siteverify";
+    $response = file_get_contents($verify_url . "?secret=" . $secret_key . "&response=" . $recaptcha_response);
+    $response_keys = json_decode($response, true);
+
+    if (!$response_keys["success"]) {
+        $error = "Verificarea reCAPTCHA a eșuat. Te rog încearcă din nou.";
+    }
+
+    // 2. Validare email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Email invalid.";
     }
 
-    // Verificare dacă emailul există deja în baza de date
+    // 3. Verificare dacă emailul există deja în baza de date
     if (empty($error)) {
         $query = "SELECT * FROM users WHERE email = ?";
         $stmt = $conn->prepare($query);
@@ -30,16 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             $error = "Acest email este deja folosit.";
         } else {
-            // Criptarea parolei
+            // 4. Criptarea parolei
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            // Inserare utilizator în baza de date
+            // 5. Inserare utilizator în baza de date
             $query = "INSERT INTO users (name, email, password, role, status) VALUES (?, ?, ?, ?, 'inactive')";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("ssss", $name, $email, $hashed_password, $role);
             $stmt->execute();
 
-            // Redirecționare către o pagină de succes (exemplu: login.php)
+            // 6. Redirecționare către login
             header("Location: login.php"); 
             exit;
         }
@@ -54,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creare cont</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="container">
@@ -79,6 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="participant">Participant</option>
                 </select>
             </div>
+            <!-- reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="6LdPodIqAAAAAJ7EDAUNKl7l7o8HEI3X1JDPdWAw"></div> <!-- 🔹 Înlocuiește cu site key -->
+            <br><br>
             <button type="submit">Creează cont</button>
         </form>
         <div class="login-link">
