@@ -6,6 +6,12 @@ error_reporting(E_ALL);
 session_start();
 include 'db_connection.php'; // Conectarea la baza de date
 
+// Includere PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -50,7 +56,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("ssss", $name, $email, $hashed_password, $role);
             $stmt->execute();
 
-            // 6. Redirecționare către login
+            // 6. Trimite e-mail de bun venit
+            $mail = new PHPMailer(true);
+
+            try {
+                // Configurare server SMTP
+                $mail->isSMTP();
+                $mail->Host = 'smtp.mailersend.net';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net';
+                $mail->Password = 'mssp.1ce9Plb.0r83ql3j28zgzw1j.Me0wGMH';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+
+                // Setare expeditor și destinatar
+                $mail->setFrom('MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net', 'UNIBUC Events');
+                $mail->addAddress($email, $name);
+
+                // Conținut e-mail
+                $mail->isHTML(true);
+                $mail->Subject = 'Bun venit pe UNIBUC Events!';
+                $mail->Body    = 'Bun venit, ' . $name . '! Contul tau UNIBUC Events a fost creat cu succes.';
+
+                $mail->send();
+            } catch (Exception $e) {
+                $error = "E-mailul de bun venit nu a putut fi trimis. Eroare: {$mail->ErrorInfo}";
+            }
+
+            // 7. Redirecționare către login
             header("Location: login.php"); 
             exit;
         }
@@ -92,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
             </div>
             <!-- reCAPTCHA -->
-            <div class="g-recaptcha" data-sitekey="6LdPodIqAAAAAJ7EDAUNKl7l7o8HEI3X1JDPdWAw"></div> <!-- 🔹 Înlocuiește cu site key -->
+            <div class="g-recaptcha" data-sitekey="6LdPodIqAAAAAJ7EDAUNKl7l7o8HEI3X1JDPdWAw"></div>
             <br><br>
             <button type="submit">Creează cont</button>
         </form>
