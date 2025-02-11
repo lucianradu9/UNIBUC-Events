@@ -46,7 +46,7 @@ foreach ($titles as $title) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evenimente Culturale</title>
+    <title>Evenimente 2025</title>
     <link rel="stylesheet" href="../css/parsed.css">
 </head>
 <body>
@@ -73,7 +73,7 @@ foreach ($titles as $title) {
         </div>
 
         <div class="back-link">
-            <a href="participant_dashboard.php">Înapoi la Dashboard</a>
+            <a href="javascript:history. back()">Înapoi</a>
         </div>
     </div>
 </body>

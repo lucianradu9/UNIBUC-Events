@@ -43,7 +43,12 @@ $result = $conn->query($query);
         <?php endif; ?>
 
         <div class="back-link">
+            <a href="evenimente2025.php">Alte evenimente</a> |
             <a href="participant_dashboard.php">Înapoi la Dashboard</a>
+        </div>
+
+        <div class="back-link">
+            
         </div>
     </div>
 </body>

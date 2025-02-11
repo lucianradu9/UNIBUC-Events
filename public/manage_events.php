@@ -80,7 +80,11 @@ $result = $stmt->get_result();
         </table>
 
         <div class="back-link">
-            <a href="create_event.php">Creează un Eveniment Nou</a>
+            <a href="create_event.php">Creează un eveniment nou</a>
+        </div>
+
+        <div class="back-link">
+            <a href="evenimente2025.php">Alte evenimente</a>
         </div>
     </div>
 </body>
