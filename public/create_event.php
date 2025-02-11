@@ -2,10 +2,28 @@
 session_start();
 include 'db_connection.php'; // Conectarea la baza de date
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
+
 // Verifică dacă utilizatorul este autentificat
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
+}
+
+$user_id = $_SESSION['user_id'];
+$query = "SELECT email, name FROM users WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$stmt->bind_result($email, $name);
+$stmt->fetch();
+$stmt->close();
+
+if (empty($email)) {
+    $error = "Nu s-a putut găsi adresa de email a utilizatorului.";
 }
 
 $error = '';
@@ -43,6 +61,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $success = "Evenimentul a fost creat cu succes!";
+
+            // 4. Trimitere email confirmare
+            $mail = new PHPMailer(true);
+
+            try {
+                // Configurare server SMTP
+                $mail->isSMTP();
+                $mail->Host = 'smtp.mailersend.net';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net';
+                $mail->Password = 'mssp.1ce9Plb.0r83ql3j28zgzw1j.Me0wGMH';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+
+                // Setare expeditor și destinatar
+                $mail->setFrom('MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net', 'UNIBUC Events');
+                $mail->addAddress($email, $name);
+
+                // Conținut e-mail
+                $mail->isHTML(true);
+                $mail->Subject = 'Evenimentul tau a fost publicat cu succes!';
+                $mail->Body    = 'Felicitari, ' . $name . '! Evenimentul tau "' . $event_name . '" a fost publicat cu succes pe platforma UNIBUC Events.';
+
+                $mail->send();
+            } catch (Exception $e) {
+                $error = "E-mailul de confirmare nu a putut fi trimis. Eroare: {$mail->ErrorInfo}";
+            }
         } else {
             $error = "A apărut o eroare la crearea evenimentului. Încearcă din nou.";
         }

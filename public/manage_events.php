@@ -54,7 +54,6 @@ $result = $stmt->get_result();
             <thead>
                 <tr>
                     <th>Nume Eveniment</th>
-                    <th>Descriere</th>
                     <th>Data</th>
                     <th>Ora</th>
                     <th>Acțiuni</th>
@@ -66,7 +65,6 @@ $result = $stmt->get_result();
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
                                 <td>{$row['event_name']}</td>
-                                <td>{$row['event_description']}</td>
                                 <td>{$row['event_date']}</td>
                                 <td>{$row['event_time']}</td>
                                 <td>
