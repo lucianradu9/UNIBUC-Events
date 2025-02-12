@@ -133,8 +133,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <br><br>
                 <button type="submit">Creează cont</button>
             </form>
-            <div class="login-link">
+            <div class="signup-link">
                 <p>Ai deja cont? <a href="login.php">Autentifică-te</a></p>
+            </div>
+            <div class="signup-link">
+                <p><a href="contact.php">Contactează-ne</a></p>
             </div>
         </div>
     </section>

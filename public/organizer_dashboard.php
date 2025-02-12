@@ -34,6 +34,10 @@ include 'db_connection.php';
             </div>
             <br>
             <div class="back-link">
+                <a href="contact.php">Contactează-ne</a>
+            </div>
+            <br>
+            <div class="back-link">
                 <a href="logout.php">Ieși din cont</a>
             </div>
         </div>

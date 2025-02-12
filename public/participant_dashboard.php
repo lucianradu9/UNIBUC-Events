@@ -71,6 +71,10 @@ $result = $stmt->get_result();
             <a href="view_events.php">Vezi evenimente disponibile</a> |
             <a href="logout.php">Ieși din cont</a>
         </div>
+        <br>
+        <div class="back-link">
+            <a href="contact.php">Contactează-ne</a>
+        </div>
     </div>
 </body>
 </html>

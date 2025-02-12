@@ -67,6 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="signup-link">
                 <p>Nu ai cont? <a href="signup.php">Creează cont</a></p>
             </div>
+            <div class="signup-link">
+                <p><a href="contact.php">Contactează-ne</a></p>
+            </div>
         </div>
     </section>
 </body>
