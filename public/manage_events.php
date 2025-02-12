@@ -86,29 +86,34 @@ $result = $stmt->get_result();
         <div class="back-link">
             <a href="evenimente2025.php">Alte evenimente</a>
         </div>
+        <br><br>
 
-        <div class="export-section">
-            <label for="export_format">Exportă în format:</label>
-            <select id="export_format">
-                <option value="xlsx">Excel (.xlsx)</option>
-                <option value="doc">Word (.doc)</option>
-                <option value="pdf">PDF (.pdf)</option>
-            </select>
-            <button id="export_button">Exportă</button>
+        <div class="container">
+            <div class="export-section">
+                <label for="export_format">Exportă în format:</label>
+                <select id="export_format">
+                    <option value="xlsx">Excel (.xlsx)</option>
+                    <option value="doc">Word (.doc)</option>
+                    <option value="pdf">PDF (.pdf)</option>
+                </select>
+                <br><br>
+                <button id="export_button">Exportă</button>
+            </div>
+
+            <script>
+            document.getElementById("export_button").addEventListener("click", function () {
+                let format = document.getElementById("export_format").value;
+                window.location.href = "export_events.php?format=" + format;
+            });
+            </script>
+            <br><br>
+            <form action="import_events.php" method="post" enctype="multipart/form-data">
+                <label for="export_format">Importă evenimente</label>
+                <input type="file" name="event_file" accept=".pdf, .docx, .xls, .xlsx" required>
+                <br><br>
+                <button type="submit">Importă</button>
+            </form>
         </div>
-
-        <script>
-        document.getElementById("export_button").addEventListener("click", function () {
-            let format = document.getElementById("export_format").value;
-            window.location.href = "export_events.php?format=" + format;
-        });
-        </script>
-
-        <form action="import_events.php" method="post" enctype="multipart/form-data">
-            <h3>Importă Evenimente</h3>
-            <input type="file" name="pdf_file" accept="application/pdf" required>
-            <button type="submit">Importă</button>
-        </form>
     </div>
 </body>
 </html>
