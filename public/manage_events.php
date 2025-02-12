@@ -86,6 +86,23 @@ $result = $stmt->get_result();
         <div class="back-link">
             <a href="evenimente2025.php">Alte evenimente</a>
         </div>
+
+        <div class="export-section">
+            <label for="export_format">Exportă în format:</label>
+            <select id="export_format">
+                <option value="xlsx">Excel (.xlsx)</option>
+                <option value="doc">Word (.doc)</option>
+                <option value="pdf">PDF (.pdf)</option>
+            </select>
+            <button id="export_button">Exportă</button>
+        </div>
+
+        <script>
+        document.getElementById("export_button").addEventListener("click", function () {
+            let format = document.getElementById("export_format").value;
+            window.location.href = "export_events.php?format=" + format;
+        });
+        </script>
     </div>
 </body>
 </html>
