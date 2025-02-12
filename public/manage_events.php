@@ -103,6 +103,12 @@ $result = $stmt->get_result();
             window.location.href = "export_events.php?format=" + format;
         });
         </script>
+
+        <form action="import_events.php" method="post" enctype="multipart/form-data">
+            <h3>Importă Evenimente</h3>
+            <input type="file" name="pdf_file" accept="application/pdf" required>
+            <button type="submit">Importă</button>
+        </form>
     </div>
 </body>
 </html>
