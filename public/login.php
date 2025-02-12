@@ -46,23 +46,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Autentificare</h2>
-        <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
-        <form method="POST" action="">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Parolă</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <button type="submit">Loghează-te</button>
-        </form>
-        <div class="signup-link">
-            <p>Nu ai cont? <a href="signup.php">Creează cont</a></p>
+    <section class="content">
+        <div class="container_img">
+            <p class="unibuc">UNIBUC Events</p>
         </div>
-    </div>
+        <div class="container">
+            <h2>Autentificare</h2>
+            <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button type="submit">Loghează-te</button>
+            </form>
+            <div class="signup-link">
+                <p>Nu ai cont? <a href="signup.php">Creează cont</a></p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

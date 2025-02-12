@@ -101,37 +101,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-    <div class="container">
-        <h2>Creare cont</h2>
-        <?php if (!empty($error)) { echo "<p class='error'>$error</p>"; } ?>
-        <form method="POST" action="">
-            <div class="form-group">
-                <label for="name">Nume</label>
-                <input type="text" name="name" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Parolă</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <div class="form-group">
-                <label for="role">Tip cont</label>
-                <select name="role" id="role" required>
-                    <option value="organizer">Organizator</option>
-                    <option value="participant">Participant</option>
-                </select>
-            </div>
-            <!-- reCAPTCHA -->
-            <div class="g-recaptcha" data-sitekey="6LdPodIqAAAAAJ7EDAUNKl7l7o8HEI3X1JDPdWAw"></div>
-            <br><br>
-            <button type="submit">Creează cont</button>
-        </form>
-        <div class="login-link">
-            <p>Ai deja cont? <a href="login.php">Autentifică-te</a></p>
+    <section class="content">
+        <div class="container_img">
+            <p class="unibuc">UNIBUC Events</p>
         </div>
-    </div>
+        <div class="container">
+            <h2>Creare cont</h2>
+            <?php if (!empty($error)) { echo "<p class='error'>$error</p>"; } ?>
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="name">Nume</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Tip cont</label>
+                    <select name="role" id="role" required>
+                        <option value="organizer">Organizator</option>
+                        <option value="participant">Participant</option>
+                    </select>
+                </div>
+                <!-- reCAPTCHA -->
+                <div class="g-recaptcha" data-sitekey="6LdPodIqAAAAAJ7EDAUNKl7l7o8HEI3X1JDPdWAw"></div>
+                <br><br>
+                <button type="submit">Creează cont</button>
+            </form>
+            <div class="login-link">
+                <p>Ai deja cont? <a href="login.php">Autentifică-te</a></p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

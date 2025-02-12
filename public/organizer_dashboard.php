@@ -22,12 +22,21 @@ include 'db_connection.php';
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Dashboard Organizator</h2>
-        <p>Bine ai venit!</p>
-        <p><a href="create_event.php" class="btn">Creează eveniment nou</a></p>
-        <p><a href="manage_events.php" class="btn">Gestionează evenimente</a></p>
-        <p><a href="logout.php">Ieși din cont</a></p>
-    </div>
+    <section class="content">
+        <div class="container_img">
+            <p class="unibuc">UNIBUC Events</p>
+        </div>
+        <div class="container">
+            <h2>Bine ai venit!</h2>
+            <div class="organizer_buttons">
+                <p><a href="create_event.php" class="btn2">Creează eveniment nou</a></p>
+                <p><a href="manage_events.php" class="btn2">Gestionează evenimente</a></p>
+            </div>
+            <br>
+            <div class="back-link">
+                <a href="logout.php">Ieși din cont</a>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

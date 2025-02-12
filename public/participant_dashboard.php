@@ -32,9 +32,7 @@ $result = $stmt->get_result();
 </head>
 <body>
     <div class="container_event">
-        <h2>Dashboard Participant</h2>
-
-        <h3>Evenimente la care te-ai înscris:</h3>
+        <h2>Evenimente la care te-ai înscris:</h2>
         <table>
             <thead>
                 <tr>
