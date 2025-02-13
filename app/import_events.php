@@ -1,15 +1,15 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectare la BD
+include 'db_connection.php';
 
-require '../vendor/autoload.php'; // Importă librăriile necesare
+require '../vendor/autoload.php';
 
 use Smalot\PdfParser\Parser;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpSpreadsheet\IOFactory as ExcelIO;
 
 if (!isset($_SESSION['user_id'])) {
-    die("Eroare: Nu ești autentificat.");
+    die("Eroare: Nu esti autentificat.");
 }
 
 $user_id = $_SESSION['user_id'];
@@ -19,10 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_file'])) {
     $file_name = $_FILES['event_file']['name'];
     $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
 
-    $events = []; // Array unde vom stoca evenimentele extrase
+    $events = [];
 
     if ($file_ext === 'pdf') {
-        // 🔹 Procesare PDF
         $parser = new Parser();
         $pdf = $parser->parseFile($file_tmp);
         $text = $pdf->getText();
@@ -38,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_file'])) {
         }
 
     } elseif (in_array($file_ext, ['doc', 'docx'])) {
-        // 🔹 Procesare DOC/DOCX
         $phpWord = IOFactory::load($file_tmp);
         $text = '';
 
@@ -61,11 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_file'])) {
         }
 
     } elseif (in_array($file_ext, ['xls', 'xlsx'])) {
-        // 🔹 Procesare XLS/XLSX
         $spreadsheet = ExcelIO::load($file_tmp);
         $sheet = $spreadsheet->getActiveSheet();
 
-        foreach ($sheet->getRowIterator(2) as $row) { // Sărim peste antet
+        foreach ($sheet->getRowIterator(2) as $row) {
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(true);
 
@@ -86,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_file'])) {
         die("Eroare: Format de fișier invalid.");
     }
 
-    // 🔹 Inserare evenimente în baza de date
+    // Introducere evenimente
     if (!empty($events)) {
         $stmt = $conn->prepare("INSERT INTO events (user_id, event_name, event_description, event_date, event_time) VALUES (?, ?, 'Eveniment importat', ?, ?)");
 
@@ -98,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_file'])) {
         header("Location: manage_events.php?success=imported");
         exit;
     } else {
-        die("Eroare: Nu s-au găsit evenimente valide în fișier.");
+        die("Eroare: Nu s-au gasit evenimente valide în fisier.");
     }
 }
 ?>

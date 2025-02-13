@@ -1,8 +1,7 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
-// Verifică dacă utilizatorul este autentificat
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -10,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Dacă utilizatorul vrea să șteargă un eveniment
+// Stergere eveniment
 if (isset($_GET['delete'])) {
     $event_id = $_GET['delete'];
     $query = "DELETE FROM events WHERE id = ? AND user_id = ?";
@@ -18,13 +17,13 @@ if (isset($_GET['delete'])) {
     $stmt->bind_param("ii", $event_id, $user_id);
 
     if ($stmt->execute()) {
-        $success = "Evenimentul a fost șters cu succes.";
+        $success = "Evenimentul a fost sters cu succes.";
     } else {
-        $error = "A apărut o eroare la ștergerea evenimentului.";
+        $error = "A aparut o eroare la stergerea evenimentului.";
     }
 }
 
-// Obține lista de evenimente ale utilizatorului
+// Lista evenimente utilizator
 $query = "SELECT * FROM events WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -84,7 +83,7 @@ $result = $stmt->get_result();
         </div>
 
         <div class="back-link">
-            <a href="evenimente2025.php">Alte evenimente</a>
+            <a href="events2025.php">Alte evenimente</a>
         </div>
         <br><br>
 

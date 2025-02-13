@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
 // Includere PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = $_POST['role']; // 'organizer' sau 'participant'
     $recaptcha_response = $_POST['g-recaptcha-response'];
 
-    // 1. Verificare reCAPTCHA
+    // 1. reCAPTCHA
     $secret_key = "6LdPodIqAAAAAOfKxnW9T0BkxRX5VDdMtaX0sa_D";
     $verify_url = "https://www.google.com/recaptcha/api/siteverify";
     $response = file_get_contents($verify_url . "?secret=" . $secret_key . "&response=" . $recaptcha_response);
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Email invalid.";
     }
 
-    // 3. Verificare dacă emailul există deja în baza de date
+    // 3. Verificare email
     if (empty($error)) {
         $query = "SELECT * FROM users WHERE email = ?";
         $stmt = $conn->prepare($query);
@@ -47,20 +47,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             $error = "Acest email este deja folosit.";
         } else {
-            // 4. Criptarea parolei
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            // 5. Inserare utilizator în baza de date
+            // 4. Adaugare utilizator
             $query = "INSERT INTO users (name, email, password, role, status) VALUES (?, ?, ?, ?, 'inactive')";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("ssss", $name, $email, $hashed_password, $role);
             $stmt->execute();
 
-            // 6. Trimite e-mail de bun venit
+            // 5. E-mail de bun venit
             $mail = new PHPMailer(true);
 
             try {
-                // Configurare server SMTP
                 $mail->isSMTP();
                 $mail->Host = 'smtp.mailersend.net';
                 $mail->SMTPAuth = true;
@@ -69,21 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
-                // Setare expeditor și destinatar
                 $mail->setFrom('MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net', 'UNIBUC Events');
                 $mail->addAddress($email, $name);
 
-                // Conținut e-mail
                 $mail->isHTML(true);
-                $mail->Subject = 'Bun venit pe UNIBUC Events!';
-                $mail->Body    = 'Bun venit, ' . $name . '! Contul tau UNIBUC Events a fost creat cu succes.';
+                $mail->Subject = 'Bun venit!';
+                $mail->Body    = 'Bun venit, ' . $name . '! Inregistrarea ta pe UNIBUC Events a fost efectuata cu succes.';
 
                 $mail->send();
             } catch (Exception $e) {
                 $error = "E-mailul de bun venit nu a putut fi trimis. Eroare: {$mail->ErrorInfo}";
             }
 
-            // 7. Redirecționare către login
             header("Location: login.php"); 
             exit;
         }

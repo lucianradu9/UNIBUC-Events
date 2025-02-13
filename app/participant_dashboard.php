@@ -1,16 +1,14 @@
 <?php
 session_start();
 
-// Verificăm dacă utilizatorul este autentificat și dacă este participant
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'participant') {
     header("Location: login.php");
     exit;
 }
 
-// Conectare la baza de date
 include 'db_connection.php';
 
-// Obținem evenimentele la care utilizatorul este înscris
+// Lista evenimente la care s-a inscris utilizatorul
 $user_id = $_SESSION['user_id'];
 $query = "SELECT events.id, events.event_name, events.event_description, events.event_date, events.event_time 
           FROM event_registrations 

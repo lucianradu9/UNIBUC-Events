@@ -1,42 +1,37 @@
 <?php
-// URL-ul paginii de pe care vrei să extragi datele
 $url = "https://www.libertatea.ro/entertainment/evenimente-culturale-2025-romania-festival-neratat-5137641";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-// Execută cererea cURL și salvează răspunsul
 $html = curl_exec($ch);
 
-// Închide sesiunea cURL
 curl_close($ch);
 
-// Verifică dacă cererea a fost realizată cu succes
 if ($html === false) {
-    die("Eroare la preluarea conținutului paginii.");
+    die("Eroare");
 }
 
-// Inițializează DOMDocument pentru a parsa HTML-ul
+// Parsare HTML cu DOMDcument
 $dom = new DOMDocument();
-libxml_use_internal_errors(true); // Ignoră erorile de parsare HTML
+libxml_use_internal_errors(true);
 $dom->loadHTML($html);
 libxml_clear_errors();
 
-// Inițializează DOMXPath pentru a naviga prin DOM
 $xpath = new DOMXPath($dom);
 
-// Extrage titlurile evenimentelor (elemente <h2> cu clasa wp-block-heading)
+// Titluri evenimente (<h2> cu clasa wp-block-heading)
 $titles = $xpath->query('//h2[contains(@class, "wp-block-heading")]');
 
-// Extrage descrierile evenimentelor (elemente <p> care urmează imediat după <h2>)
+// Descrieri evenimente (<p>-ul dupa <h2>)
 $descriptions = [];
 foreach ($titles as $title) {
     $description = $xpath->query('following-sibling::p[1]', $title);
     if ($description->length > 0) {
         $descriptions[] = $description->item(0);
     } else {
-        $descriptions[] = null; // Dacă nu există descriere, adăugăm null
+        $descriptions[] = null;
     }
 }
 ?>
@@ -65,7 +60,7 @@ foreach ($titles as $title) {
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <p>Nu există evenimente disponibile în acest moment.</p>
+            <p>Nu exista evenimente disponibile.</p>
         <?php endif; ?>
 
         <div class="back-link">

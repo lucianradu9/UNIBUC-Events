@@ -5,19 +5,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
-// Verifică dacă utilizatorul este autentificat
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-// Conectare la baza de date
 include 'db_connection.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Obține ID-ul evenimentului din URL
 if (!isset($_GET['event_id'])) {
     header("Location: manage_events.php");
     exit;
@@ -25,7 +21,6 @@ if (!isset($_GET['event_id'])) {
 
 $event_id = $_GET['event_id'];
 
-// Obține detaliile evenimentului
 $query = "SELECT * FROM events WHERE id = ? AND user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("ii", $event_id, $user_id);
@@ -39,7 +34,7 @@ if ($event_result->num_rows === 0) {
 
 $event = $event_result->fetch_assoc();
 
-// Obține lista de participanți
+// Lista de participanti
 $participants_query = "SELECT users.name, users.email FROM event_registrations 
                         JOIN users ON event_registrations.user_id = users.id WHERE event_registrations.event_id = ?";
 $participants_stmt = $conn->prepare($participants_query);
@@ -76,8 +71,8 @@ $participants_result = $participants_stmt->get_result();
             <p>Nu sunt participanți înscriși.</p>
         <?php endif; ?>
 
-        <a href="edit_event.php?event_id=<?php echo $event['id']; ?>" class="btn">Editează Evenimentul</a>
-        <a href="manage_events.php?delete=<?php echo $event['id']; ?>" class="btn delete">Șterge Evenimentul</a>
+        <a href="edit_event.php?event_id=<?php echo $event['id']; ?>" class="btn">Editeaza Evenimentul</a>
+        <a href="manage_events.php?delete=<?php echo $event['id']; ?>" class="btn delete">Sterge Evenimentul</a>
 
         <div class="back-link">
             <a href="manage_events.php">Înapoi la Gestionarea Evenimentelor</a>

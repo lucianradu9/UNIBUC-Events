@@ -1,28 +1,26 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-$event_id = $_GET['event_id']; // Preluăm event_id din URL
+$event_id = $_GET['event_id']; // Preluare event_id din URL
 
-// Verificăm dacă evenimentul există în baza de date
 $query_event = "SELECT * FROM events WHERE id = ?";
 $stmt_event = $conn->prepare($query_event);
 $stmt_event->bind_param("i", $event_id);
 $stmt_event->execute();
 $event = $stmt_event->get_result()->fetch_assoc();
 
-// Dacă evenimentul nu există, redirecționăm către o pagină de eroare
 if (!$event) {
     header("Location: participant_dashboard.php?error=event_not_found");
     exit;
 }
 
-// Verificăm dacă utilizatorul este deja înscris la eveniment
+// Verificare status utilizator (inscris/neinscris)
 $user_id = $_SESSION['user_id'];
 $query_registration = "SELECT * FROM event_registrations WHERE user_id = ? AND event_id = ?";
 $stmt_registration = $conn->prepare($query_registration);
@@ -71,17 +69,17 @@ $already_registered = $result->num_rows > 0;
 
         <?php
         if (isset($_GET['success']) && $_GET['success'] == 'registered') {
-            echo "<p class='success'>Te-ai înscris cu succes la eveniment!</p>";
+            echo "<p class='success'>Te-ai înscris cu succes la eveniment.</p>";
         }
         if (isset($_GET['error'])) {
             if ($_GET['error'] == 'recaptcha_failed') {
-                echo "<p class='error'>Verificarea reCAPTCHA a eșuat. Te rog încearcă din nou.</p>";
+                echo "<p class='error'>Verificarea reCAPTCHA a esuat. Te rog incearca din nou.</p>";
             }
             if ($_GET['error'] == 'already_registered') {
-                echo "<p class='error'>Ești deja înscris la acest eveniment.</p>";
+                echo "<p class='error'>Esti deja înscris la acest eveniment.</p>";
             }
             if ($_GET['error'] == 'registration_failed') {
-                echo "<p class='error'>A apărut o eroare la înscriere. Încearcă din nou.</p>";
+                echo "<p class='error'>A aparut o eroare la inscriere. Te rog incearca din nou.</p>";
             }
         }
         ?>

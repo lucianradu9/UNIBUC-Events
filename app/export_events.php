@@ -31,7 +31,7 @@ if ($format == "xlsx") {
 }
 
 function exportToExcel($events) {
-    require '../vendor/autoload.php'; // Asigură-te că ai instalat PhpSpreadsheet cu `composer require phpoffice/phpspreadsheet`
+    require '../vendor/autoload.php';
     $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
     $sheet->setCellValue('A1', 'Nume Eveniment')->setCellValue('B1', 'Data')->setCellValue('C1', 'Ora');
@@ -65,7 +65,7 @@ function exportToWord($events) {
 }
 
 function exportToPDF($events) {
-    require '../vendor/autoload.php'; // Instalează dompdf cu `composer require dompdf/dompdf`
+    require '../vendor/autoload.php';
     $dompdf = new Dompdf\Dompdf();
     $html = "<h2>Evenimentele tale</h2><table border='1'><tr><th>Nume Eveniment</th><th>Data</th><th>Ora</th></tr>";
 

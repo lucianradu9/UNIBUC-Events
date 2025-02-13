@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = mysqli_real_escape_string($conn, $_POST['message']);
     $recaptcha_response = $_POST['g-recaptcha-response'];
 
-    // Verificare reCAPTCHA
+    // reCAPTCHA
     $secret_key = "6LdPodIqAAAAAOfKxnW9T0BkxRX5VDdMtaX0sa_D";
     $verify_url = "https://www.google.com/recaptcha/api/siteverify";
     $response = file_get_contents($verify_url . "?secret=" . $secret_key . "&response=" . $recaptcha_response);
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_query($conn, $sql)) {
             $success_message = "Mesajul a fost trimis cu succes.";
             
-            // Trimitere e-mail de confirmare
+            // E-mail de confirmare
             $mail = new PHPMailer(true);
             try {
                 $mail->isSMTP();

@@ -1,14 +1,13 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
-// Verifică dacă utilizatorul este autentificat și are rolul de participant
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'participant') {
     header("Location: login.php");
     exit;
 }
 
-// Obține lista evenimentelor din baza de date
+// Lista evenimentelor
 $query = "SELECT * FROM events ORDER BY event_date ASC, event_time ASC";
 $result = $conn->query($query);
 
@@ -39,11 +38,11 @@ $result = $conn->query($query);
                 <?php endwhile; ?>
             </div>
         <?php else: ?>
-            <p>Nu există evenimente disponibile în acest moment.</p>
+            <p>Nu exista evenimente disponibile in acest moment.</p>
         <?php endif; ?>
 
         <div class="back-link">
-            <a href="evenimente2025.php">Alte evenimente</a> |
+            <a href="events2025.php">Alte evenimente</a> |
             <a href="participant_dashboard.php">Înapoi la Dashboard</a>
         </div>
 

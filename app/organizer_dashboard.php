@@ -1,16 +1,13 @@
 <?php
 session_start();
 
-// Verificăm dacă utilizatorul este autentificat și dacă este organizator
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'organizer') {
     header("Location: login.php");
     exit;
 }
 
-// Conectare la baza de date
 include 'db_connection.php';
 
-// Aici vor veni funcționalitățile pentru organizator, de exemplu, crearea de evenimente
 ?>
 
 <!DOCTYPE html>

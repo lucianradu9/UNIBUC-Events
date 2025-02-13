@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verificăm parola criptată
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_role'] = $user['role']; // Tip utilizator: 'organizer' sau 'participant'
+            $_SESSION['user_role'] = $user['role'];
 
             // Redirecționare pe baza rolului
             if ($user['role'] === 'organizer') {

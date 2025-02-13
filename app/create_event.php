@@ -1,13 +1,12 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require '../vendor/autoload.php';
 
-// Verifică dacă utilizatorul este autentificat
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -29,7 +28,7 @@ if (empty($email)) {
 $error = '';
 $success = '';
 
-// Verifică dacă formularul a fost trimis
+// Verificare trimitere formular
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $event_name = $_POST['event_name'];
     $event_description = $_POST['event_description'];
@@ -37,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $event_time = $_POST['event_time'];
     $recaptcha_response = $_POST['g-recaptcha-response'];
 
-    // 1. Verificare reCAPTCHA
+    // 1. reCAPTCHA
     $secret_key = "6LdPodIqAAAAAOfKxnW9T0BkxRX5VDdMtaX0sa_D";
     $verify_url = "https://www.google.com/recaptcha/api/siteverify";
     $response = file_get_contents($verify_url . "?secret=" . $secret_key . "&response=" . $recaptcha_response);
@@ -47,14 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Verificarea reCAPTCHA a eșuat. Te rog încearcă din nou.";
     }
 
-    // 2. Validări simple
+    // 2. Introducere evenimente
     if (empty($event_name) || empty($event_description) || empty($event_date) || empty($event_time)) {
         $error = "Toate câmpurile sunt obligatorii.";
     }
 
-    // 3. Inserare eveniment dacă nu există erori
     if (empty($error)) {
-        $user_id = $_SESSION['user_id']; // ID-ul utilizatorului autentificat
+        $user_id = $_SESSION['user_id'];
         $query = "INSERT INTO events (user_id, event_name, event_description, event_date, event_time) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("issss", $user_id, $event_name, $event_description, $event_date, $event_time);
@@ -62,11 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             $success = "Evenimentul a fost creat cu succes!";
 
-            // 4. Trimitere email confirmare
+            // 3. Email confirmare
             $mail = new PHPMailer(true);
 
             try {
-                // Configurare server SMTP
                 $mail->isSMTP();
                 $mail->Host = 'smtp.mailersend.net';
                 $mail->SMTPAuth = true;
@@ -75,11 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
-                // Setare expeditor și destinatar
                 $mail->setFrom('MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net', 'UNIBUC Events');
                 $mail->addAddress($email, $name);
 
-                // Conținut e-mail
                 $mail->isHTML(true);
                 $mail->Subject = 'Evenimentul tau a fost publicat cu succes!';
                 $mail->Body    = 'Felicitari, ' . $name . '! Evenimentul tau "' . $event_name . '" a fost publicat cu succes pe platforma UNIBUC Events.';

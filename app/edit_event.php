@@ -1,22 +1,20 @@
 <?php
 session_start();
-include 'db_connection.php'; // Conectarea la baza de date
+include 'db_connection.php';
 
-// Verifică dacă utilizatorul este autentificat
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-// Verifică dacă există un ID valid pentru eveniment
 if (!isset($_GET['event_id'])) {
     die("ID-ul evenimentului nu a fost specificat.");
 }
 
 $event_id = $_GET['event_id'];
-$user_id = $_SESSION['user_id']; // ID-ul utilizatorului conectat
+$user_id = $_SESSION['user_id'];
 
-// Obține detaliile evenimentului
+// Detalii eveniment
 $query = "SELECT * FROM events WHERE id = ? AND user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("ii", $event_id, $user_id);
@@ -24,25 +22,24 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    die("Evenimentul nu există sau nu aparține utilizatorului conectat.");
+    die("Evenimentul nu poate fi gasit.");
 }
 
 $event = $result->fetch_assoc();
 $error = '';
 $success = '';
 
-// Verifică dacă formularul a fost trimis
+// Verificare trimitere formular
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $event_name = $_POST['event_name'];
     $event_description = $_POST['event_description'];
     $event_date = $_POST['event_date'];
     $event_time = $_POST['event_time'];
 
-    // Validări simple
     if (empty($event_name) || empty($event_description) || empty($event_date) || empty($event_time)) {
-        $error = "Toate câmpurile sunt obligatorii.";
+        $error = "Toate campurile sunt obligatorii.";
     } else {
-        // Actualizare eveniment în baza de date
+        // Actualizare eveniment
         $update_query = "UPDATE events SET event_name = ?, event_description = ?, event_date = ?, event_time = ? WHERE id = ? AND user_id = ?";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bind_param("ssssii", $event_name, $event_description, $event_date, $event_time, $event_id, $user_id);
@@ -50,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($update_stmt->execute()) {
             $success = "Evenimentul a fost actualizat cu succes!";
         } else {
-            $error = "A apărut o eroare la actualizarea evenimentului. Încearcă din nou.";
+            $error = "A aparut o eroare la actualizarea evenimentului. Incearca din nou.";
         }
     }
 }
