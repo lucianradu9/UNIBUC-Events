@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prezentare Aplicație</title>
+    <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+    <header>
+        <h1>Prezentarea Aplicației UNIBUC Events</h1>
+    </header>
+    
+    <div class="container">
+        <section id="descriere">
+            <h2>Descriere Generală</h2>
+            <p>Aplicatia permite utilizatorilor sa se inregistreze drept organizatori de evenimente sau drept participanti. Orice utilizator poate contacta administratorul site-ului, fara sa fie nevoie sa detina un cont.</p>
+            <p>Organizatorii pot crea evenimente, oferindu-le un nume, o descriere, o data si o ora de desfasurare. Dupa postarea evenimentului, acesta poate fi editat sau sters. Se pot importa si exporta evenimentele create de un organizator in formatele .pdf, .doc si .xlsx. De asemenea, organizatorul poate vedea lista de participanti inscrisi la evenimentul sau, o alta lista cu toate evenimentele pe care le organizeaza sau o lista cu evenimente publicate de alte site-uri.</p>
+            <p>Participantii se pot inscrie la evenimente. Inscrierea este inregistrata in contul lor, astfel ca acestia pot vedea o lista cu toate evenimentele la care s-au inscris. De asemenea, pot vedea o lista cu toate evenimentele disponibile sau o lista cu evenimente publicate de alte site-uri.</p>
+        </section>
+        <br>
+        <section id="arhitectura">
+            <h2>Arhitectura Aplicației</h2>
+            <p><strong>Roluri utilizatori:</strong> Organizator, Participant.</p>
+            <p><strong>Entități:</strong> Utilizatori, Evenimente, Înregistrări, Mesaje de Contact.</p>
+            <p><strong>Procese:</strong> Autentificare, CRUD Evenimente, Înscriere la evenimente, Trimitere mesaje.</p>
+            <p>Baza de date utilizeaza MySQL si contine tabele pentru utilizatori, evenimente, insregistrari si mesaje de contact.</p>
+        </section>
+        <br>
+        <section id="implementare">
+            <h2>Implementare</h2>
+            <p>Frontend-ul a fost realizat cu HTML si CSS. Backend-ul a fost realizat cu PHP si MySQL. Site-ul are o arhitectura MVC, cu sesiuni pentru autentificare.</p>
+            <p>Pentru securizarea trimiterii de formulare a fost folosit reCaptcha, prin crearea unui nou proiect in Google Cloud si introducerea credentialelor oferite in formularele necesare.</p>
+            <p>Pentru trimiterea de mail-uri automate, s-au folosit PHPMailer si Mailersend. Utilizatorii primesc astfel de mail-uri la inregistrarea unui cont nou, la crearea unui eveniment, la inscrierea la un eveniment si dupa utilizarea formularului de contact.</p>
+            <p>Pentru exportul evenimentelor, s-au folosit PhpSpreadsheet (pentru generarea de fisiere .xlsx) si Dompdf (pentru generarea de fisiere .pdf). Documentele .doc au fost create prin generare HTML.</p>
+            <p>Pentru importul evenimentelor, s-au folosit Smalot\PdfParser (pentru a extrage textul din fisiere .pdf), PhpOffice\PhpWord (pentru a citi fiserele .docx) si PhpSpreadsheet (pentru a procesa fiserele .xlsx)</p>
+        </section>
+        <br>
+        <a href="javascript:history. back()">Înapoi</a>
+    </div>
+</body>
+</html>

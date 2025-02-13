@@ -70,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="signup-link">
                 <p><a href="contact.php">Contactează-ne</a></p>
             </div>
+            <div class="signup-link">
+                <p><a href="../docs/detalii.html">Detalii aplicație</a></p>
+            </div>
         </div>
     </section>
 </body>
