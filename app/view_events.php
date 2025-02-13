@@ -23,7 +23,7 @@ $result = $conn->query($query);
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container_event">
         <h2>Evenimente Disponibile</h2>
 
         <?php if ($result && $result->num_rows > 0): ?>

@@ -74,13 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="contact.php" method="POST">
                 <label for="name">Numele tău:</label>
                 <input type="text" name="name" id="name" required><br>
-
+                <br>
                 <label for="email">Email:</label>
                 <input type="email" name="email" id="email" required><br>
-
+                <br>
                 <label for="message">Mesaj:</label>
-                <textarea name="message" id="message" required></textarea><br>
-                
+                <textarea name="message" id="message" required></textarea>
+                <br><br>
                 <div class="g-recaptcha" data-sitekey="6LdPodIqAAAAAJ7EDAUNKl7l7o8HEI3X1JDPdWAw"></div>
                 <br>
                 <button type="submit">Trimite mesajul</button>
