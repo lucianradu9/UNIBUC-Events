@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt_event->fetch();
     $stmt_event->close();
 
-    // 2. Verificăm dacă utilizatorul este deja înscris
+    // 2. Verificare utilizator (inscris/neinscris)
     $query = "SELECT * FROM event_registrations WHERE user_id = ? AND event_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $user_id, $event_id);

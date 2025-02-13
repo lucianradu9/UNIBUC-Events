@@ -41,7 +41,9 @@ foreach ($titles as $title) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evenimente 2025</title>
+    <title>Evenimente 2025 | UNIBUC Events</title>
+    <link rel="icon" href="../media/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="../media/favicon.png" type="image/png">
     <link rel="stylesheet" href="../css/parsed.css">
 </head>
 <body>

@@ -58,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editare Eveniment</title>
+    <title>Editare Eveniment | UNIBUC Events</title>
+    <link rel="icon" href="../media/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="../media/favicon.png" type="image/png">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
