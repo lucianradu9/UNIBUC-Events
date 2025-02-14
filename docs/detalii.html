@@ -34,9 +34,9 @@
         <section id="arhitectura">
             <h2>Arhitectura Aplicației</h2>
             <p><strong>Roluri utilizatori:</strong> Organizator, Participant.</p>
-            <p><strong>Entități:</strong> Utilizatori, Evenimente, Înregistrări, Mesaje de Contact.</p>
-            <p><strong>Procese:</strong> Autentificare, CRUD Evenimente, Înscriere la evenimente, Trimitere mesaje.</p>
-            <p>Baza de date utilizeaza MySQL si contine tabele pentru utilizatori, evenimente, insregistrari si mesaje de contact.</p>
+            <p><strong>Entități:</strong> Utilizatori, Evenimente, Inregistrari, Mesaje de Contact.</p>
+            <p><strong>Procese:</strong> Autentificare, CRUD Evenimente, Inscriere la evenimente, Trimitere mesaje.</p>
+            <p>Baza de date utilizeaza MySQL si contine tabele pentru utilizatori, evenimente, inregistrari si mesaje de contact.</p>
         </section>
         <br>
         <section id="implementare">
@@ -46,6 +46,7 @@
             <p>Pentru trimiterea de mail-uri automate, s-au folosit PHPMailer si Mailersend. Utilizatorii primesc astfel de mail-uri la inregistrarea unui cont nou, la crearea unui eveniment, la inscrierea la un eveniment si dupa utilizarea formularului de contact.</p>
             <p>Pentru exportul evenimentelor, s-au folosit PhpSpreadsheet (pentru generarea de fisiere .xlsx) si Dompdf (pentru generarea de fisiere .pdf). Documentele .doc au fost create prin generare HTML.</p>
             <p>Pentru importul evenimentelor, s-au folosit Smalot\PdfParser (pentru a extrage textul din fisiere .pdf), PhpOffice\PhpWord (pentru a citi fiserele .docx) si PhpSpreadsheet (pentru a procesa fiserele .xlsx)</p>
+            <p>Pentru a obtine statistici despre utilizarea site-ului, s-a folosit Google Analytics, importand script-ul generat in head-ul fiecarei pagini.</p>
         </section>
         <br>
         <a href="javascript:history. back()">Înapoi</a>
