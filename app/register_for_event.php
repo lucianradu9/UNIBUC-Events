@@ -76,12 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isSMTP();
             $mail->Host = 'smtp.mailersend.net';
             $mail->SMTPAuth = true;
-            $mail->Username = 'MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net';
-            $mail->Password = 'mssp.1ce9Plb.0r83ql3j28zgzw1j.Me0wGMH';
+            $mail->Username = 'MS_flCJ0E@trial-3zxk54v9zj1gjy6v.mlsender.net';
+            $mail->Password = 'mssp.Lv3DFma.neqvygm9jy8l0p7w.NZBCYcl';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('MS_LdBNGk@trial-z86org8qvqzgew13.mlsender.net', 'UNIBUC Events');
+            $mail->setFrom('MS_flCJ0E@trial-3zxk54v9zj1gjy6v.mlsender.net', 'UNIBUC Events');
             $mail->addAddress($email, $name);
 
             $mail->isHTML(true);
